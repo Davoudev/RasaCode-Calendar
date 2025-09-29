@@ -1,0 +1,13 @@
+.date-output {
+  margin-top: 12px;
+}
+.date-output input {
+  width: 100%;
+  /* max-width: 360px; */
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  text-align: center;
+  font-size: 0.95rem;
+}

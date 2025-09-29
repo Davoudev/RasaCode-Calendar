@@ -1,9 +1,9 @@
-import { Calendar } from "./components/Calendar/Calendar";
+import { Month } from "./components/Month/Month";
 
 function App() {
   return (
     <div>
-      <Calendar monthName="مهر" daysInMonth={30} startDay={2} />
+      <Month />
     </div>
   );
 }

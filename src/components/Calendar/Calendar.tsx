@@ -1,14 +1,17 @@
-import React, { useState } from "react";
 import "./Calendar.css";
 import { WeekDay } from "./WeekDay";
 import { Day as DayComponent } from "./Day";
 import type { CalendarProps, Day } from "../../../Types/types";
 
-export const Calendar: React.FC<CalendarProps> = ({
+export function Calendar({
   monthName,
   daysInMonth,
-  startDay = 0,
-}) => {
+  startDay,
+  selectedDay,
+  setSelectedDay,
+  goNextMonth,
+  goPrevMonth,
+}: CalendarProps) {
   // the week Days
   const daysOfWeek: string[] = [
     "شنبه",
@@ -20,8 +23,6 @@ export const Calendar: React.FC<CalendarProps> = ({
     "جمعه",
   ];
 
-  const [selectedDay, setSelectedDay] = useState<Day>(null);
-
   // create days
   const days: Day[] = Array(startDay)
     .fill(null)
@@ -32,15 +33,17 @@ export const Calendar: React.FC<CalendarProps> = ({
     setSelectedDay((prev) => (prev === day ? null : day));
   };
 
-  // for fetting time stamp
-  const getTimestamp = (day: Day): Day => {
-    if (!day) return null;
-    return new Date(2025, 10, day).getTime();
-  };
-
   return (
     <div className="calendar-container">
-      <h2>تقویم {monthName}</h2>
+      <div className="calendar-header">
+        <button className="arrow" onClick={goPrevMonth}>
+          ‹
+        </button>
+        <h2 className="month-title">تقویم {monthName}</h2>
+        <button className="arrow" onClick={goNextMonth}>
+          ›
+        </button>
+      </div>
       <div className="calendar">
         {daysOfWeek.map((day) => (
           <WeekDay key={day} label={day} />
@@ -55,14 +58,6 @@ export const Calendar: React.FC<CalendarProps> = ({
           />
         ))}
       </div>
-
-      <div className={`timestamp ${selectedDay ? "show" : ""}`}>
-        {selectedDay ? (
-          <p>Timestamp انتخاب شده: {getTimestamp(selectedDay)}</p>
-        ) : (
-          <p>&nbsp;</p>
-        )}
-      </div>
     </div>
   );
-};
+}

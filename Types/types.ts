@@ -4,7 +4,11 @@ export type Day = number | null;
 export interface CalendarProps {
   monthName: string;
   daysInMonth: number;
-  startDay?: number;
+  startDay: number;
+  selectedDay: Day;
+  setSelectedDay: (day: Day | ((prev: Day) => Day)) => void;
+  goNextMonth: () => void;
+  goPrevMonth: () => void;
 }
 
 //  a prop for a day

@@ -51,7 +51,6 @@ h2 {
 
 .day:hover {
   background: #e0e7ff;
-  /* transform: scale(1.1); */
 }
 
 .selected {
@@ -60,15 +59,43 @@ h2 {
   font-weight: bold;
   transform: scale(1.15);
 }
-.timestamp {
-  margin-top: 15px;
-  font-size: 0.9em;
-  color: #777;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  height: 20px;
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
-.timestamp.show {
-  opacity: 1;
-  transform: translateY(0);
+
+.month-title {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.arrow {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.arrow:hover {
+  color: #007bff;
+}
+.date-output {
+  margin-top: 8px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fafafa;
+  font-size: 0.95rem;
+  text-align: center;
+  color: #333;
 }
