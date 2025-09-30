@@ -1,69 +1,70 @@
-// components/Calendar/Month.tsx
-import { useState } from "react";
-import { Calendar } from "../Calendar/Calendar";
-import { months } from "../../../data/months";
-import type { Day } from "../../../Types/types";
-import "./Month.css";
+import "./month.css";
+import { WeekDay } from "./weekDay";
+import { Day as DayComponent } from "./day";
+import type { MonthProps, Day } from "../../../Type/type";
 
-export function Month() {
-  //  for change persian digits to english digits
-  function toEnglishDigits(str: string): string {
-    return str.replace(/[۰-۹]/g, (d) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(d)));
-  }
+export function Month({
+  monthName,
+  daysInMonth,
+  startDay,
+  selectedDate,
+  setSelectedDate,
+  goNextMonth,
+  goPrevMonth,
+  currentMonthIndex,
+  currentYear,
+}: MonthProps) {
+  // the week Days
+  const daysOfWeek: string[] = [
+    "شنبه",
+    "یک",
+    "دو",
+    "سه",
+    "چهار",
+    "پنج",
+    "جمعه",
+  ];
 
-  const today = new Date();
-  // get current persian year
-  const persianYearStr = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
-    year: "numeric",
-  }).format(today);
+  // create days
+  const days: Day[] = Array(startDay)
+    .fill(null)
+    .concat(Array.from({ length: daysInMonth }, (_, i) => i + 1));
 
-  //  change year to english digits and parse it to number
-  const initialYear = parseInt(toEnglishDigits(persianYearStr), 10);
-
-  const [persianYear, setPersianYear] = useState(initialYear);
-  const [monthIndex, setMonthIndex] = useState(6); // مهر
-  const [selectedDay, setSelectedDay] = useState<Day>(null);
-
-  const currentMonth = months[monthIndex];
-
-  const goNextMonth = () => {
-    setMonthIndex((prev) => {
-      if (prev === months.length - 1) setPersianYear((y) => y + 1);
-      return (prev + 1) % months.length;
-    });
-    setSelectedDay(null);
+  // for select a day
+  const handleClick = (day: number): void => {
+    setSelectedDate(day);
   };
-
-  const goPrevMonth = () => {
-    setMonthIndex((prev) => {
-      if (prev === 0) setPersianYear((y) => y - 1);
-      return (prev - 1 + months.length) % months.length;
-    });
-    setSelectedDay(null);
-  };
-  // show selected date in input
-  const formattedPersianDate =
-    selectedDay != null
-      ? `امروز ${selectedDay} ${currentMonth.name} ${persianYear} است`
-      : "";
 
   return (
-    <div>
-      <Calendar
-        monthName={currentMonth.name}
-        daysInMonth={currentMonth.daysInMonth}
-        startDay={currentMonth.startDay}
-        selectedDay={selectedDay}
-        setSelectedDay={setSelectedDay}
-        goNextMonth={goNextMonth}
-        goPrevMonth={goPrevMonth}
-      />
+    <div className="calendar-container">
+      <div className="calendar-header">
+        <button className="arrow" onClick={goPrevMonth}>
+          ‹
+        </button>
+        <h2 className="month-title">تقویم {monthName}</h2>
+        <button className="arrow" onClick={goNextMonth}>
+          ›
+        </button>
+      </div>
+      <div className="calendar">
+        {daysOfWeek.map((day) => (
+          <WeekDay key={day} label={day} />
+        ))}
 
-      {selectedDay && (
-        <div className="date-output">
-          <input readOnly value={formattedPersianDate} />
-        </div>
-      )}
+        {days.map((day, idx) => (
+          <DayComponent
+            key={day ?? `empty-${idx}`}
+            day={day}
+            isSelected={
+              !!day &&
+              selectedDate?.day === day &&
+              selectedDate?.monthIndex === currentMonthIndex &&
+              selectedDate?.year === currentYear
+            }
+            onClick={handleClick}
+          />
+        ))}
+      </div>
     </div>
   );
 }

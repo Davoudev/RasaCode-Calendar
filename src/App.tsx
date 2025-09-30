@@ -1,9 +1,8 @@
-import { Month } from "./components/Month/Month";
-
+import { CalendarContainer } from "./components/calendarContainer";
 function App() {
   return (
     <div>
-      <Month />
+      <CalendarContainer />
     </div>
   );
 }

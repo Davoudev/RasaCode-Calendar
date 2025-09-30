@@ -1,4 +1,4 @@
-import type { DayProps } from "../../../Types/types";
+import type { DayProps } from "../../../Type/type";
 
 export const Day = ({ day, isSelected, onClick }: DayProps) => {
   if (!day) {
