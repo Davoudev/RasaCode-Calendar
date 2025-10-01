@@ -24,12 +24,18 @@ export interface DayProps {
 export interface WeekDayProps {
   label: string;
 }
+export interface SelectedDate {
+  day: Day;
+  monthIndex: number;
+  year: number;
+}
 
 export interface CalendarProps {
   months: { name: string; daysInMonth: number; startDay: number }[];
   onDateSelect: (
     date: { day: Day; monthIndex: number; year: number } | null
   ) => void;
+  selectedDate: SelectedDate | null;
 }
 export interface DateInputProps {
   selectedDate: { day: Day; monthIndex: number; year: number } | null;
