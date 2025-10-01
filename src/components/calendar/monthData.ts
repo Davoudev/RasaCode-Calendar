@@ -1,4 +1,3 @@
-// دیتا جدا
 export const months = [
   { name: "فروردین", daysInMonth: 31, startDay: 6 },
   { name: "اردیبهشت", daysInMonth: 31, startDay: 2 },

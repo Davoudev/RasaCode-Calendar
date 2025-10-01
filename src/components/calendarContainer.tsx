@@ -3,11 +3,10 @@ import type { Day } from "../../Type/type";
 import { months } from "./calendar/monthData";
 import { DateInput } from "./dateInput/dateInput";
 import { Calendar } from "./calendar/Calendar";
-import toEnglishDigits from "../../utils/utils";
+import toEnglishDigits from "../../utils/EnglishDigits";
 
 export function CalendarContainer() {
-  const today = new Date();
-
+  const today = new Date().getTime();
   const persianYearStr = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
     year: "numeric",
   }).format(today);
@@ -17,6 +16,7 @@ export function CalendarContainer() {
   const persianDayStr = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
     day: "numeric",
   }).format(today);
+  console.log("persianyearStr  :", persianYearStr);
 
   const initialYear = parseInt(toEnglishDigits(persianYearStr), 10);
   const initialMonth = parseInt(toEnglishDigits(persianMonthStr), 10) - 1;
