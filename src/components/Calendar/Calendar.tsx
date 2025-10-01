@@ -1,5 +1,5 @@
 // components/Calendar/Month.tsx
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CalendarProps, Day } from "../../../Type/type";
 import "./calendar.css";
 import { Month } from "../month/month";
@@ -29,20 +29,31 @@ export function Calendar({ months, onDateSelect }: CalendarProps) {
   const currentMonth = months[monthIndex];
 
   const goNextMonth = () => {
-    setMonthIndex((prev) => {
-      if (prev === months.length - 1) setPersianYear((y) => y + 1);
-      return (prev + 1) % months.length;
-    });
-    // setSelectedDay(null);
+    setMonthIndex((prev) => (prev + 1) % months.length);
   };
 
   const goPrevMonth = () => {
-    setMonthIndex((prev) => {
-      if (prev === 0) setPersianYear((y) => y - 1);
-      return (prev - 1 + months.length) % months.length;
-    });
-    // setSelectedDay(null);
+    setMonthIndex((prev) => (prev - 1 + months.length) % months.length);
   };
+
+  // update year when month changes
+  const prevMonthRef = useRef<number>(monthIndex);
+
+  useEffect(() => {
+    const prev = prevMonthRef.current;
+
+    const len = months.length;
+
+    if (prev === len - 1 && monthIndex === 0) {
+      setPersianYear((y) => y + 1);
+    } else if (prev === 0 && monthIndex === len - 1) {
+      setPersianYear((y) => y - 1);
+    }
+
+    // update the previous month index
+    prevMonthRef.current = monthIndex;
+  }, [monthIndex, months.length]);
+
   // show selected date in input
   const handleDateSelect = (day: number) => {
     const newDate = { day, monthIndex, year: persianYear };

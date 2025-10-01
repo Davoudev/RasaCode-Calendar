@@ -14,9 +14,7 @@ export function CalendarContainer() {
   return (
     <div className="calendar-wrapper">
       <Calendar months={months} onDateSelect={setSelectedDate} />
-      {selectedDate && (
-        <DateInput selectedDate={selectedDate} months={months} />
-      )}
+      <DateInput selectedDate={selectedDate} months={months} />
     </div>
   );
 }
