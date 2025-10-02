@@ -1,4 +1,4 @@
-import type { DateInputProps } from "../../../Type/type";
+import type { DateInputProps } from "../../../type/type";
 // import "./calendar.css";
 
 export function DateInput({ selectedDate, months }: DateInputProps) {

@@ -1,7 +1,7 @@
 import "./month.css";
-import { WeekDay } from "./weekDay";
+import { WeekDay } from "./week-day";
 import { Day as DayComponent } from "./day";
-import type { MonthProps, Day } from "../../../Type/type";
+import type { MonthProps, Day } from "../../../type/type";
 
 export function Month({
   monthName,

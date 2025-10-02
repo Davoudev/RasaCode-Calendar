@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { CalendarProps } from "../../../Type/type";
+import type { CalendarProps } from "../../../type/type";
 import "./calendar.css";
 import { Month } from "../month/month";
 

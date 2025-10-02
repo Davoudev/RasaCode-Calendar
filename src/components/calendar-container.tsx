@@ -1,9 +1,9 @@
 import { useState } from "react";
-import type { Day } from "../../Type/type";
-import { months } from "./calendar/monthData";
-import { DateInput } from "./dateInput/dateInput";
-import { Calendar } from "./calendar/Calendar";
-import toEnglishDigits from "../../utils/EnglishDigits";
+import type { Day } from "../../type/type";
+import { months } from "./calendar/month-data";
+import { DateInput } from "./date-input/date-input";
+import toEnglishDigits from "../../utils/english-digits";
+import { Calendar } from "./calendar/calendar";
 
 export function CalendarContainer() {
   const today = new Date().getTime();

@@ -1,6 +1,7 @@
-import type { DayProps } from "../../../Type/type";
+import type { DayProps } from "../../../type/type";
 
 export const Day = ({ day, isSelected, onClick }: DayProps) => {
+  console.log("day : ", day);
   if (!day) {
     return <div className="empty"></div>;
   }
