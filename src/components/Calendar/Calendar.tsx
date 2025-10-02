@@ -1,51 +1,67 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { CalendarProps } from "../../../type/type";
 import "./calendar.css";
-import { Month } from "../month/month";
+import { months } from "./month-data";
+import { getTodayPersianDate } from "../../../utils/persian-date";
+import { Month } from "../month/Month";
 
-export function Calendar({
-  months,
-  onDateSelect,
-  selectedDate,
-}: CalendarProps) {
-  const [persianYear, setPersianYear] = useState(selectedDate?.year ?? 1404);
-  const [monthIndex, setMonthIndex] = useState(selectedDate?.monthIndex ?? 0);
+type PersianDate = { year: number; month: number; day: number };
 
-  const currentMonth = months[monthIndex];
+export function Calendar({ date }: CalendarProps) {
+  const [todayPersianDate, setTodayPersianDate] = useState<PersianDate | null>(
+    date ? getTodayPersianDate(date) : null
+  );
+
+  const persianYear = todayPersianDate?.year ?? 1404;
+  const month = todayPersianDate?.month ?? 0;
+  const currentMonth = months[month];
 
   const goNextMonth = () => {
-    setMonthIndex((prev) => (prev + 1) % months.length);
+    setTodayPersianDate((prev) => {
+      if (!prev) return null;
+      let newMonth = (prev.month + 1) % months.length;
+      let newYear = prev.year;
+
+      if (newMonth === 0) {
+        newYear += 1;
+      }
+
+      return { ...prev, month: newMonth, year: newYear };
+    });
   };
 
   const goPrevMonth = () => {
-    setMonthIndex((prev) => (prev - 1 + months.length) % months.length);
+    setTodayPersianDate((prev) => {
+      if (!prev) return null;
+      let newMonth = prev.month - 1;
+      let newYear = prev.year;
+
+      if (newMonth < 0) {
+        newMonth = months.length - 1;
+        newYear -= 1;
+      }
+
+      return { ...prev, month: newMonth, year: newYear };
+    });
   };
 
-  const prevMonthRef = useRef<number>(monthIndex);
-
-  useEffect(() => {
-    const prev = prevMonthRef.current;
-    const len = months.length;
-
-    if (prev === len - 1 && monthIndex === 0) {
-      setPersianYear((y) => y + 1);
-    } else if (prev === 0 && monthIndex === len - 1) {
-      setPersianYear((y) => y - 1);
-    }
-
-    prevMonthRef.current = monthIndex;
-  }, [monthIndex, months.length]);
-
   const handleDateSelect = (day: number) => {
-    const newDate = { day, monthIndex, year: persianYear };
+    if (!todayPersianDate) return;
+
+    const newDate = {
+      day,
+      month: todayPersianDate.month,
+      year: todayPersianDate.year,
+    };
+
     if (
-      selectedDate?.day === day &&
-      selectedDate?.monthIndex === monthIndex &&
-      selectedDate?.year === persianYear
+      todayPersianDate.day === day &&
+      todayPersianDate.month === newDate.month &&
+      todayPersianDate.year === newDate.year
     ) {
-      onDateSelect(null);
+      setTodayPersianDate(null);
     } else {
-      onDateSelect(newDate);
+      setTodayPersianDate(newDate);
     }
   };
 
@@ -55,11 +71,11 @@ export function Calendar({
         monthName={currentMonth.name}
         daysInMonth={currentMonth.daysInMonth}
         startDay={currentMonth.startDay}
-        selectedDate={selectedDate}
+        selectedDate={todayPersianDate}
         setSelectedDate={handleDateSelect}
         goNextMonth={goNextMonth}
         goPrevMonth={goPrevMonth}
-        currentMonthIndex={monthIndex}
+        currentMonth={month}
         currentYear={persianYear}
       />
     </div>

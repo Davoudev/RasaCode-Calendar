@@ -1,5 +1,4 @@
-// utils/persianDate.ts
-import toEnglishDigits from "./EnglishDigits";
+import toEnglishDigits from "./english-digits";
 
 export function getTodayPersianDate(timestamp: number) {
   const persianYearStr = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
@@ -15,7 +14,7 @@ export function getTodayPersianDate(timestamp: number) {
   }).format(timestamp);
 
   const year = parseInt(toEnglishDigits(persianYearStr), 10);
-  const month = parseInt(toEnglishDigits(persianMonthStr), 10) - 1;
+  const month = parseInt(toEnglishDigits(persianMonthStr), 10) - 1; // صفر ایندکس
   const day = parseInt(toEnglishDigits(persianDayStr), 10);
 
   return { year, month, day };

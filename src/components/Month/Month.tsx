@@ -11,10 +11,9 @@ export function Month({
   setSelectedDate,
   goNextMonth,
   goPrevMonth,
-  currentMonthIndex,
+  currentMonth,
   currentYear,
 }: MonthProps) {
-  // the week Days
   const daysOfWeek: string[] = [
     "شنبه",
     "یک",
@@ -25,12 +24,10 @@ export function Month({
     "جمعه",
   ];
 
-  // create days
   const days: Day[] = Array(startDay)
     .fill(null)
     .concat(Array.from({ length: daysInMonth }, (_, i) => i + 1));
 
-  // for select a day
   const handleClick = (day: number): void => {
     setSelectedDate(day);
   };
@@ -41,7 +38,9 @@ export function Month({
         <button className="arrow" onClick={goPrevMonth}>
           ‹
         </button>
-        <h2 className="month-title">تقویم {monthName}</h2>
+        <h2 className="month-title">
+          {monthName} - {currentYear}
+        </h2>
         <button className="arrow" onClick={goNextMonth}>
           ›
         </button>
@@ -58,7 +57,7 @@ export function Month({
             isSelected={
               !!day &&
               selectedDate?.day === day &&
-              selectedDate?.monthIndex === currentMonthIndex &&
+              selectedDate?.month === currentMonth &&
               selectedDate?.year === currentYear
             }
             onClick={handleClick}
