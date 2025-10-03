@@ -55,23 +55,14 @@ export function Calendar({ date, changeDate }: CalendarProps) {
       year: todayPersianDate.year,
     };
 
-    if (
-      todayPersianDate.day === day &&
-      todayPersianDate.month === newDate.month &&
-      todayPersianDate.year === newDate.year
-    ) {
-      setTodayPersianDate(null);
-      changeDate(null);
-    } else {
-      setTodayPersianDate(newDate);
+    setTodayPersianDate(newDate);
 
-      const timestamp = persianToTimestamp(
-        newDate.year,
-        newDate.month,
-        newDate.day
-      );
-      changeDate(timestamp);
-    }
+    const timestamp = persianToTimestamp(
+      newDate.year,
+      newDate.month,
+      newDate.day
+    );
+    changeDate(timestamp);
   };
 
   return (
