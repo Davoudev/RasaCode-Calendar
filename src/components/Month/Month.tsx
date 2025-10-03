@@ -56,9 +56,10 @@ export function Month({
             day={day}
             isSelected={
               !!day &&
-              selectedDate?.day === day &&
-              selectedDate?.month === currentMonth &&
-              selectedDate?.year === currentYear
+              !!selectedDate &&
+              selectedDate.day === day &&
+              selectedDate.month === currentMonth &&
+              selectedDate.year === currentYear
             }
             onClick={handleClick}
           />

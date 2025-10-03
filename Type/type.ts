@@ -37,3 +37,4 @@ export interface DateInputProps {
   selectedDate: number | null;
   months: { name: string; daysInMonth: number; startDay: number }[];
 }
+export type PersianDate = { year: number; month: number; day: number };

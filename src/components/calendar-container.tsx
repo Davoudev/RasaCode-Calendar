@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { months } from "./calendar/month-data";
 import { DateInput } from "./date-input/date-input";
-import { Calendar } from "./calendar/Calendar";
+import { Calendar } from "./calendar/calendar";
 
 export function CalendarContainer() {
   const today = new Date().getTime();

@@ -1,13 +1,14 @@
 import { useState } from "react";
-import type { CalendarProps } from "../../../type/type";
+import type { CalendarProps, PersianDate } from "../../../type/type";
 import "./calendar.css";
 import { months } from "./month-data";
-import { getTodayPersianDate } from "../../../utils/persian-date";
-import { Month } from "../month/Month";
+import {
+  getTodayPersianDate,
+  persianToTimestamp,
+} from "../../../utils/date-changer";
+import { Month } from "../month/month";
 
-type PersianDate = { year: number; month: number; day: number };
-
-export function Calendar({ date }: CalendarProps) {
+export function Calendar({ date, changeDate }: CalendarProps) {
   const [todayPersianDate, setTodayPersianDate] = useState<PersianDate | null>(
     date ? getTodayPersianDate(date) : null
   );
@@ -26,7 +27,7 @@ export function Calendar({ date }: CalendarProps) {
         newYear += 1;
       }
 
-      return { ...prev, month: newMonth, year: newYear };
+      return { day: 0, month: newMonth, year: newYear };
     });
   };
 
@@ -41,7 +42,7 @@ export function Calendar({ date }: CalendarProps) {
         newYear -= 1;
       }
 
-      return { ...prev, month: newMonth, year: newYear };
+      return { day: 0, month: newMonth, year: newYear };
     });
   };
 
@@ -60,8 +61,16 @@ export function Calendar({ date }: CalendarProps) {
       todayPersianDate.year === newDate.year
     ) {
       setTodayPersianDate(null);
+      changeDate(null);
     } else {
       setTodayPersianDate(newDate);
+
+      const timestamp = persianToTimestamp(
+        newDate.year,
+        newDate.month,
+        newDate.day
+      );
+      changeDate(timestamp);
     }
   };
 
