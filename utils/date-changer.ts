@@ -76,13 +76,17 @@ export function persianToTimestamp(
 
   return resultDate.getTime();
 }
-export const jalaliToGregorian = (
+export const jalaliToTimestamp = (
   jy: number,
   jm: number,
   jd: number
 ): number => {
-  console.log("jalali to gregorian =>", jy, jm, jd);
+  // normalize month: allow jm to be 0..11 (JS Date.getMonth()) or 1..12
+  if (jm >= 0 && jm <= 11) {
+    jm = jm + 1; // treat as zero-based input -> convert to 1..12
+  }
   // frist phase change jalali to JDM
+
   const epbase = jy >= 0 ? jy - 474 : jy - 473;
   const epyear = 474 + (epbase % 2820);
 
@@ -113,7 +117,6 @@ export const jalaliToGregorian = (
   const month = m + 3 - 12 * Math.floor(m / 10);
   const year = 100 * b + d - 4800 + Math.floor(m / 10);
 
-  //
-  const date = new Date(year, month - 1, day);
-  return date.getTime();
+  // build timestamp at UTC midnight (avoids local timezone day-shift)
+  return Date.UTC(year, month - 1, day); // milliseconds since epoch (UTC)
 };
