@@ -4,6 +4,7 @@ import "./calendar.css";
 import { months } from "./month-data";
 import {
   getTodayPersianDate,
+  jalaliToGregorian,
   persianToTimestamp,
 } from "../../../utils/date-changer";
 import { Month } from "../month/month";
@@ -57,7 +58,7 @@ export function Calendar({ date, changeDate }: CalendarProps) {
 
     setTodayPersianDate(newDate);
 
-    const timestamp = persianToTimestamp(
+    const timestamp = jalaliToGregorian(
       newDate.year,
       newDate.month,
       newDate.day

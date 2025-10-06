@@ -38,3 +38,4 @@ export interface DateInputProps {
   months: { name: string; daysInMonth: number; startDay: number }[];
 }
 export type PersianDate = { year: number; month: number; day: number };
+// export type GregorianDate = { gy: number; gm: number; gd: number };

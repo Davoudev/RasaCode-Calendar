@@ -25,6 +25,7 @@ export function persianToTimestamp(
   month: number,
   day: number
 ): number {
+  console.log("outputs =>", year, month, day);
   function toGregorian(jy: number, jm: number, jd: number) {
     jy += 1595;
     let days =
@@ -75,3 +76,44 @@ export function persianToTimestamp(
 
   return resultDate.getTime();
 }
+export const jalaliToGregorian = (
+  jy: number,
+  jm: number,
+  jd: number
+): number => {
+  console.log("jalali to gregorian =>", jy, jm, jd);
+  // frist phase change jalali to JDM
+  const epbase = jy >= 0 ? jy - 474 : jy - 473;
+  const epyear = 474 + (epbase % 2820);
+
+  let mdays: number;
+  if (jm <= 7) {
+    mdays = (jm - 1) * 31;
+  } else {
+    mdays = (jm - 1) * 30 + 6;
+  }
+
+  const jdn =
+    jd +
+    mdays +
+    Math.floor((epyear * 682 - 110) / 2816) +
+    (epyear - 1) * 365 +
+    Math.floor(epbase / 2820) * 1029983 +
+    (1948320 - 1);
+  // secound phase change JDM to georgian
+
+  const a = jdn + 32044;
+  const b = Math.floor((4 * a + 3) / 146097);
+  const c = a - Math.floor((146097 * b) / 4);
+  const d = Math.floor((4 * c + 3) / 1461);
+  const e = c - Math.floor((1461 * d) / 4);
+  const m = Math.floor((5 * e + 2) / 153);
+
+  const day = e - Math.floor((153 * m + 2) / 5) + 1;
+  const month = m + 3 - 12 * Math.floor(m / 10);
+  const year = 100 * b + d - 4800 + Math.floor(m / 10);
+
+  //
+  const date = new Date(year, month - 1, day);
+  return date.getTime();
+};
