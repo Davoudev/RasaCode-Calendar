@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { CalendarProps, SelectedDate } from "../../../type/type";
 import "./calendar.css";
-import { months } from "./month-data-";
-import { Month } from "../month/month-";
+import { months } from "./month-data";
+import { Month } from "../month/month";
 
 export function Calendar({ date, changeDate }: CalendarProps) {
   const [todayPersianDate, setTodayPersianDate] = useState<SelectedDate | null>(
