@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { months } from "./calendar/month-data";
-import { DateInput } from "./date-input/date-input";
-import { Calendar } from "./calendar/calendar";
+import { months } from "./calendar/month-data-";
+import { DateInput } from "./date-input/date-input-";
+import { Calendar } from "./calendar/calendar-";
 import { getTodayPersianDate } from "../../utils/date-changer";
 import type { SelectedDate } from "../../type/type";
 
