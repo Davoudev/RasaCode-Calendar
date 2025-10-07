@@ -1,18 +1,14 @@
 import { useState } from "react";
-import type { CalendarProps, PersianDate } from "../../../type/type";
+import type { CalendarProps, SelectedDate } from "../../../type/type";
 import "./calendar.css";
 import { months } from "./month-data";
-import {
-  getTodayPersianDate,
-  jalaliToTimestamp,
-} from "../../../utils/date-changer";
 import { Month } from "../month/month";
 
 export function Calendar({ date, changeDate }: CalendarProps) {
-  const [todayPersianDate, setTodayPersianDate] = useState<PersianDate | null>(
-    date ? getTodayPersianDate(date) : null
+  const [todayPersianDate, setTodayPersianDate] = useState<SelectedDate | null>(
+    date ?? null
   );
-  console.log("todayPersianDate =>", todayPersianDate);
+  console.log("first", todayPersianDate);
   const persianYear = todayPersianDate?.year ?? 1404;
   const month = todayPersianDate?.month ?? 0;
   const currentMonth = months[month];
@@ -55,15 +51,11 @@ export function Calendar({ date, changeDate }: CalendarProps) {
       year: todayPersianDate.year,
     };
 
-    console.log("newDate =>", newDate);
     setTodayPersianDate(newDate);
 
-    const timestamp = jalaliToTimestamp(
-      newDate.year,
-      newDate.month,
-      newDate.day
-    );
-    changeDate(timestamp);
+    console.log("new Date =>", newDate);
+
+    changeDate(newDate);
   };
 
   return (
