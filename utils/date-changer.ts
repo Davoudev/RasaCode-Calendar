@@ -17,5 +17,5 @@ export function getTodayPersianDate(timestamp: number) {
   const month = parseInt(toEnglishDigits(persianMonthStr), 10) - 1; // صفر ایندکس
   const day = parseInt(toEnglishDigits(persianDayStr), 10);
 
-  return { year, month, day };
+  return { day, month, year };
 }

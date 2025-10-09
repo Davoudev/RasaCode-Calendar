@@ -3,12 +3,13 @@ import type { CalendarProps, SelectedDate } from "../../../type/type";
 import "./calendar.css";
 import { months } from "./month-data";
 import { Month } from "../month/month";
+import { getTodayPersianDate } from "../../../utils/date-changer";
 
 export function Calendar({ date, changeDate }: CalendarProps) {
   const [todayPersianDate, setTodayPersianDate] = useState<SelectedDate | null>(
-    date ?? null
+    date ? getTodayPersianDate(date) : null
   );
-  console.log("first", todayPersianDate);
+
   const persianYear = todayPersianDate?.year ?? 1404;
   const month = todayPersianDate?.month ?? 0;
   const currentMonth = months[month];
@@ -50,12 +51,20 @@ export function Calendar({ date, changeDate }: CalendarProps) {
       month: todayPersianDate.month,
       year: todayPersianDate.year,
     };
+    let Disagreement;
+    Disagreement = day - todayPersianDate.day!;
+
+    console.log("todayPersianDate =>", todayPersianDate);
+    console.log("day =>", day);
+    console.log("Disagreement =>", Disagreement);
 
     setTodayPersianDate(newDate);
 
     console.log("new Date =>", newDate);
 
-    changeDate(newDate);
+    changeDate(
+      new Date(date!).setDate(new Date(date!).getDate() + Disagreement)
+    );
   };
 
   return (

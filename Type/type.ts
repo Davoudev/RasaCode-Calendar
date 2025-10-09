@@ -29,11 +29,13 @@ export interface SelectedDate {
 }
 
 export interface CalendarProps {
-  date: SelectedDate | null;
-  changeDate: (date: SelectedDate | null) => void;
+  date: number | null;
+  changeDate: (date: number | null) => void | null;
 }
 
 export interface DateInputProps {
-  selectedDate: SelectedDate | null;
+  selectedDate: number | null;
   months: { name: string; daysInMonth: number; startDay: number }[];
 }
+export type PersianDate = { year: number; month: number; day: number };
+// export type GregorianDate = { gy: number; gm: number; gd: number };
