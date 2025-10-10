@@ -6,65 +6,74 @@ import { Month } from "../month/month";
 import { getTodayPersianDate } from "../../../utils/date-changer";
 
 export function Calendar({ date, changeDate }: CalendarProps) {
-  const [todayPersianDate, setTodayPersianDate] = useState<SelectedDate | null>(
-    date ? getTodayPersianDate(date) : null
-  );
+  // selected Date for showing in input
+  const inputSelectedDate = date ? getTodayPersianDate(date) : null;
 
-  const persianYear = todayPersianDate?.year ?? 1404;
-  const month = todayPersianDate?.month ?? 0;
-  const currentMonth = months[month];
+  // show initial view
+  const initialView = date
+    ? getTodayPersianDate(date)
+    : { year: 1404, month: 0, day: 1 };
+  const [viewYear, setViewYear] = useState<number>(initialView.year);
+  const [viewMonth, setViewMonth] = useState<number>(initialView.month);
+  const currentMonth = months[viewMonth];
+
+  // calculate day difference between current input date and clicked target date
+  const calculateDayDelta = (from: SelectedDate, to: SelectedDate) => {
+    const fromIndex = from.year * 12 + from.month;
+    const toIndex = to.year * 12 + to.month;
+
+    if (toIndex === fromIndex) {
+      return (to.day as number) - (from.day as number);
+    }
+
+    if (toIndex > fromIndex) {
+      // move forward
+      let days = months[from.month].daysInMonth - (from.day as number);
+      for (let idx = fromIndex + 1; idx < toIndex; idx++) {
+        const m = idx % 12;
+        days += months[m].daysInMonth;
+      }
+      days += to.day as number;
+      return days;
+    } else {
+      // move backward
+      let days = from.day as number;
+      for (let idx = fromIndex - 1; idx > toIndex; idx--) {
+        const m = idx % 12;
+        days += months[m].daysInMonth;
+      }
+      days += months[to.month].daysInMonth - (to.day as number);
+      return -days;
+    }
+  };
 
   const goNextMonth = () => {
-    setTodayPersianDate((prev) => {
-      if (!prev) return null;
-      let newMonth = (prev.month + 1) % months.length;
-      let newYear = prev.year;
-
-      if (newMonth === 0) {
-        newYear += 1;
-      }
-
-      return { day: 0, month: newMonth, year: newYear };
-    });
+    let newMonth = (viewMonth + 1) % months.length;
+    let newYear = viewYear;
+    if (newMonth === 0) newYear += 1;
+    setViewMonth(newMonth);
+    setViewYear(newYear);
+    // this input will not change; it will only be updated by clicking on a day
   };
 
   const goPrevMonth = () => {
-    setTodayPersianDate((prev) => {
-      if (!prev) return null;
-      let newMonth = prev.month - 1;
-      let newYear = prev.year;
-
-      if (newMonth < 0) {
-        newMonth = months.length - 1;
-        newYear -= 1;
-      }
-
-      return { day: 0, month: newMonth, year: newYear };
-    });
+    let newMonth = viewMonth - 1;
+    let newYear = viewYear;
+    if (newMonth < 0) {
+      newMonth = months.length - 1;
+      newYear -= 1;
+    }
+    setViewMonth(newMonth);
+    setViewYear(newYear);
+    // this input will not change; it will only be updated by clicking on a day
   };
 
   const handleDateSelect = (day: number) => {
-    if (!todayPersianDate) return;
-
-    const newDate = {
-      day,
-      month: todayPersianDate.month,
-      year: todayPersianDate.year,
-    };
-    let Disagreement;
-    Disagreement = day - todayPersianDate.day!;
-
-    console.log("todayPersianDate =>", todayPersianDate);
-    console.log("day =>", day);
-    console.log("Disagreement =>", Disagreement);
-
-    setTodayPersianDate(newDate);
-
-    console.log("new Date =>", newDate);
-
-    changeDate(
-      new Date(date!).setDate(new Date(date!).getDate() + Disagreement)
-    );
+    if (!date) return;
+    const from = getTodayPersianDate(date);
+    const to: SelectedDate = { day, month: viewMonth, year: viewYear };
+    const delta = calculateDayDelta(from, to);
+    changeDate(new Date(date).setDate(new Date(date).getDate() + delta));
   };
 
   return (
@@ -73,12 +82,12 @@ export function Calendar({ date, changeDate }: CalendarProps) {
         monthName={currentMonth.name}
         daysInMonth={currentMonth.daysInMonth}
         startDay={currentMonth.startDay}
-        selectedDate={todayPersianDate}
+        selectedDate={inputSelectedDate}
         setSelectedDate={handleDateSelect}
         goNextMonth={goNextMonth}
         goPrevMonth={goPrevMonth}
-        currentMonth={month}
-        currentYear={persianYear}
+        currentMonth={viewMonth}
+        currentYear={viewYear}
       />
     </div>
   );
