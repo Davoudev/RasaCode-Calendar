@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { CalendarProps, SelectedDate } from "../../../type/type";
 import "./calendar.css";
-import { months } from "./month-data";
+import { getDaysInJalaliMonth, months } from "./month-data";
 import { Month } from "../month/month";
 import { getTodayPersianDate } from "../../../utils/date-changer";
 
@@ -28,10 +28,11 @@ export function Calendar({ date, changeDate }: CalendarProps) {
 
     if (toIndex > fromIndex) {
       // move forward
-      let days = months[from.month].daysInMonth - (from.day as number);
+      let days =
+        getDaysInJalaliMonth(from.year, from.month) - (from.day as number);
       for (let idx = fromIndex + 1; idx < toIndex; idx++) {
         const m = idx % 12;
-        days += months[m].daysInMonth;
+        days += getDaysInJalaliMonth(from.year, m);
       }
       days += to.day as number;
       return days;
@@ -40,9 +41,10 @@ export function Calendar({ date, changeDate }: CalendarProps) {
       let days = from.day as number;
       for (let idx = fromIndex - 1; idx > toIndex; idx--) {
         const m = idx % 12;
-        days += months[m].daysInMonth;
+        days += getDaysInJalaliMonth(from.year, m);
       }
-      days += months[to.month].daysInMonth - (to.day as number);
+
+      days += getDaysInJalaliMonth(to.year, to.month) - (to.day as number);
       return -days;
     }
   };
@@ -80,7 +82,7 @@ export function Calendar({ date, changeDate }: CalendarProps) {
     <div>
       <Month
         monthName={currentMonth.name}
-        daysInMonth={currentMonth.daysInMonth}
+        daysInMonth={getDaysInJalaliMonth(viewYear, viewMonth)}
         startDay={currentMonth.startDay}
         selectedDate={inputSelectedDate}
         setSelectedDate={handleDateSelect}
