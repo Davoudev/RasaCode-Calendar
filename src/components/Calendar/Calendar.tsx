@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { CalendarProps } from "../../../Type/type";
 import "./calendar.css";
-import { Month } from "../month/month";
+import { Month } from "../month/Month";
 
 export function Calendar({
   months,

@@ -1,5 +1,5 @@
 import "./month.css";
-import { WeekDay } from "./weekDay";
+import { WeekDay } from "./week-day";
 import { Day as DayComponent } from "./day";
 import type { MonthProps, Day } from "../../../Type/type";
 
