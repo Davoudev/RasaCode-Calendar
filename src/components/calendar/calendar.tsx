@@ -3,7 +3,10 @@ import type { CalendarProps, SelectedDate } from "../../../type/type";
 import "./calendar.css";
 import { getDaysInJalaliMonth, months } from "./month-data";
 import { Month } from "../month/month";
-import { getTodayPersianDate } from "../../../utils/date-changer";
+import {
+  getFirstWeekdayOfPersianMonthByYM,
+  getTodayPersianDate,
+} from "../../../utils/date-changer";
 
 export function Calendar({ date, changeDate }: CalendarProps) {
   // selected Date for showing in input
@@ -15,6 +18,9 @@ export function Calendar({ date, changeDate }: CalendarProps) {
     : { year: 1404, month: 0, day: 1 };
   const [viewYear, setViewYear] = useState<number>(initialView.year);
   const [viewMonth, setViewMonth] = useState<number>(initialView.month);
+
+  const startDay = getFirstWeekdayOfPersianMonthByYM(viewYear, viewMonth);
+
   const currentMonth = months[viewMonth];
 
   // calculate day difference between current input date and clicked target date
@@ -50,11 +56,11 @@ export function Calendar({ date, changeDate }: CalendarProps) {
   };
 
   const goNextMonth = () => {
-    let newMonth = (viewMonth + 1) % months.length;
-    let newYear = viewYear;
-    if (newMonth === 0) newYear += 1;
+    let newMonth = (viewMonth + 1) % 12;
+    let newYear = viewYear + (newMonth === 0 ? 1 : 0);
     setViewMonth(newMonth);
     setViewYear(newYear);
+
     // this input will not change; it will only be updated by clicking on a day
   };
 
@@ -62,7 +68,7 @@ export function Calendar({ date, changeDate }: CalendarProps) {
     let newMonth = viewMonth - 1;
     let newYear = viewYear;
     if (newMonth < 0) {
-      newMonth = months.length - 1;
+      newMonth = 11;
       newYear -= 1;
     }
     setViewMonth(newMonth);
@@ -77,13 +83,12 @@ export function Calendar({ date, changeDate }: CalendarProps) {
     const delta = calculateDayDelta(from, to);
     changeDate(new Date(date).setDate(new Date(date).getDate() + delta));
   };
-
   return (
     <div>
       <Month
         monthName={currentMonth.name}
         daysInMonth={getDaysInJalaliMonth(viewYear, viewMonth)}
-        startDay={currentMonth.startDay}
+        startDay={startDay}
         selectedDate={inputSelectedDate}
         setSelectedDate={handleDateSelect}
         goNextMonth={goNextMonth}

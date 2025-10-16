@@ -1,16 +1,16 @@
 export const months = [
-  { name: "فروردین", startDay: 6 },
-  { name: "اردیبهشت", startDay: 2 },
-  { name: "خرداد", startDay: 5 },
-  { name: "تیر", startDay: 1 },
-  { name: "مرداد", startDay: 4 },
-  { name: "شهریور", startDay: 0 },
-  { name: "مهر", startDay: 3 },
-  { name: "آبان", startDay: 5 },
-  { name: "آذر", startDay: 0 },
-  { name: "دی", startDay: 2 },
-  { name: "بهمن", startDay: 5 },
-  { name: "اسفند", startDay: 6 },
+  { name: "فروردین" },
+  { name: "اردیبهشت" },
+  { name: "خرداد" },
+  { name: "تیر" },
+  { name: "مرداد" },
+  { name: "شهریور" },
+  { name: "مهر" },
+  { name: "آبان" },
+  { name: "آذر" },
+  { name: "دی" },
+  { name: "بهمن" },
+  { name: "اسفند" },
 ];
 export function getDaysInJalaliMonth(year: number, month: number): number {
   if (month >= 0 && month <= 5) return 31;
