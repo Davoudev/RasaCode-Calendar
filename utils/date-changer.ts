@@ -1,23 +1,17 @@
-import toEnglishDigits from "./english-digits";
-
 export function getTodayPersianDate(timestamp: number) {
-  const persianYearStr = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+  const formatted = new Intl.DateTimeFormat("fa-IR-u-nu-latn", {
     year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
   }).format(timestamp);
 
-  const persianMonthStr = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
-    month: "numeric",
-  }).format(timestamp);
+  const [year, month, day] = formatted.split("/").map(Number);
 
-  const persianDayStr = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
-    day: "numeric",
-  }).format(timestamp);
-
-  const year = parseInt(toEnglishDigits(persianYearStr), 10);
-  const month = parseInt(toEnglishDigits(persianMonthStr), 10) - 1;
-  const day = parseInt(toEnglishDigits(persianDayStr), 10);
-
-  return { day, month, year };
+  return {
+    year,
+    month: month - 1,
+    day,
+  };
 }
 
 export function getFirstWeekdayOfPersianMonthByYM(
@@ -30,20 +24,16 @@ export function getFirstWeekdayOfPersianMonthByYM(
   // looping until we find the target month and year
   while (true) {
     const persianYear = parseInt(
-      toEnglishDigits(
-        new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
-          year: "numeric",
-        }).format(date)
-      ),
+      new Intl.DateTimeFormat("fa-IR-u-nu-latn", {
+        year: "numeric",
+      }).format(date),
       10
     );
     const persianMonth =
       parseInt(
-        toEnglishDigits(
-          new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
-            month: "numeric",
-          }).format(date)
-        ),
+        new Intl.DateTimeFormat("fa-IR-u-nu-latn", {
+          month: "numeric",
+        }).format(date),
         10
       ) - 1;
 
@@ -55,11 +45,9 @@ export function getFirstWeekdayOfPersianMonthByYM(
       // now find frist day in current month
       while (true) {
         const day = parseInt(
-          toEnglishDigits(
-            new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
-              day: "numeric",
-            }).format(date)
-          ),
+          new Intl.DateTimeFormat("fa-IR-u-nu-latn", {
+            day: "numeric",
+          }).format(date),
           10
         );
         if (day === 1) break;
@@ -67,7 +55,7 @@ export function getFirstWeekdayOfPersianMonthByYM(
       }
 
       // return startDay
-      const weekDay = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+      const weekDay = new Intl.DateTimeFormat("fa-IR-u-nu-latn", {
         weekday: "long",
       }).format(date);
 

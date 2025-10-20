@@ -35,7 +35,7 @@ export interface CalendarProps {
 
 export interface DateInputProps {
   selectedDate: number | null;
-  months: { name: string; daysInMonth: number; startDay: number }[];
+  months: { name: string }[];
 }
 export type PersianDate = { year: number; month: number; day: number };
 // export type GregorianDate = { gy: number; gm: number; gd: number };
