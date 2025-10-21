@@ -2,9 +2,9 @@ export type Day = number | null;
 
 export interface MonthProps {
   monthName: string;
-  daysInMonth: number;
+  daysInMonth: { jalaliDate: string; timestamp: number }[];
   startDay: number;
-  selectedDate: { day: Day; month: number; year: number } | null;
+  selectedDate: number | null;
   setSelectedDate: (day: number) => void;
   goNextMonth: () => void;
   goPrevMonth: () => void;
@@ -13,7 +13,7 @@ export interface MonthProps {
 }
 
 export interface DayProps {
-  day: Day;
+  day: { dayNumber: string; timestamp: number };
   isSelected: boolean;
   onClick: (day: number) => void;
 }

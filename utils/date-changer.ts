@@ -37,10 +37,11 @@ export function getFirstWeekdayOfPersianMonthByYM(
         10
       ) - 1;
 
-    console.log("persianYear:", persianYear);
-    console.log("year", year);
-    console.log("persianMonth", persianMonth);
-    console.log("month", month);
+    // console.log("persianYear:", persianYear);
+    // console.log("year", year);
+    // console.log("persianMonth", persianMonth);
+    // console.log("month", month);
+
     if (persianYear === year && persianMonth === month) {
       // now find frist day in current month
       while (true) {

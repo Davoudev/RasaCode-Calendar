@@ -1,7 +1,7 @@
 import "./month.css";
 import { WeekDay } from "./week-day";
 import { Day as DayComponent } from "./day";
-import type { MonthProps, Day } from "../../../type/type";
+import type { MonthProps } from "../../../type/type";
 
 export function Month({
   monthName,
@@ -11,7 +11,7 @@ export function Month({
   setSelectedDate,
   goNextMonth,
   goPrevMonth,
-  currentMonth,
+  // currentMonth,
   currentYear,
 }: MonthProps) {
   const daysOfWeek: string[] = [
@@ -23,15 +23,19 @@ export function Month({
     "پنج",
     "جمعه",
   ];
+  console.log("daysInMonth", daysInMonth);
+  const days = [
+    ...Array(startDay).fill(null),
+    ...daysInMonth.map((dayObj, i) => ({
+      dayNumber: i + 1,
+      timestamp: dayObj.timestamp,
+    })),
+  ];
 
-  const days: Day[] = Array(startDay)
-    .fill(null)
-    .concat(Array.from({ length: daysInMonth }, (_, i) => i + 1));
-
-  const handleClick = (day: number): void => {
-    setSelectedDate(day);
+  const handleClick = (timestamp: number): void => {
+    setSelectedDate(timestamp);
   };
-
+  console.log("days", days);
   return (
     <div className="calendar-container">
       <div className="calendar-header">
@@ -52,16 +56,10 @@ export function Month({
 
         {days.map((day, idx) => (
           <DayComponent
-            key={day ?? `empty-${idx}`}
+            key={day ? day.timestamp : `empty-${idx}`}
             day={day}
-            isSelected={
-              !!day &&
-              !!selectedDate &&
-              selectedDate.day === day &&
-              selectedDate.month === currentMonth &&
-              selectedDate.year === currentYear
-            }
-            onClick={handleClick}
+            isSelected={!!day && selectedDate === day.timestamp}
+            onClick={() => day && handleClick(day.timestamp)}
           />
         ))}
       </div>

@@ -4,9 +4,11 @@ import { DateInput } from "./date-input/date-input";
 import { Calendar } from "./calendar/calendar";
 
 export function CalendarContainer() {
-  const today = new Date().getTime();
-  const [selectedDate, setSelectedDate] = useState<number | null>(today);
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  const today = now.getTime();
 
+  const [selectedDate, setSelectedDate] = useState<number | null>(today);
   return (
     <div className="calendar-wrapper">
       <Calendar date={selectedDate} changeDate={setSelectedDate} />
