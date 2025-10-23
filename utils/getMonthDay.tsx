@@ -4,15 +4,15 @@ export const getMonthDays = (timestamp: number) => {
 
   // Convert Gregorian date to Jalali (Shamsi)
   const formattedJalaliDate = new Intl.DateTimeFormat("fa-IR-u-nu-latn", {
-    // year: "numeric",
+    year: "numeric",
     month: "2-digit",
     day: "2-digit",
   }).format(baseDate);
 
   // Extract Jalali year, month, and day
-  // const jalaliYear = Number(formattedJalaliDate.split("/")[0]);
-  const jalaliMonth = Number(formattedJalaliDate.split("/")[0]);
-  const jalaliDay = Number(formattedJalaliDate.split("/")[1]);
+  const jalaliYear = Number(formattedJalaliDate.split("/")[0]);
+  const jalaliMonth = Number(formattedJalaliDate.split("/")[1]);
+  const jalaliDay = Number(formattedJalaliDate.split("/")[2]);
 
   // Calculate the start of the Jalali month
   const startOfMonth = new Date(baseDate);
@@ -25,23 +25,21 @@ export const getMonthDays = (timestamp: number) => {
   while (true) {
     const currentDate = new Date(startOfMonth);
     currentDate.setDate(startOfMonth.getDate() + dayCounter);
-    // console.log("currentDate", currentDate);
+
     // Convert current Gregorian date to Jalali format
     const currentJalaliDate = new Intl.DateTimeFormat("fa-IR-u-nu-latn", {
-      // year: "numeric",
+      year: "numeric",
       month: "2-digit",
       day: "2-digit",
+      weekday: "long",
     }).format(currentDate);
 
-    // console.log("first", currentJalaliDate);
     // Extract Jalali month and year for comparison
-    const currentMonth = Number(currentJalaliDate.split("/")[0]);
-    // const currentYear = Number(currentJalaliDate.split(" ")[1].split("/")[0]);
+    const currentMonth = Number(currentJalaliDate.split("/")[1]);
+    const currentYear = Number(currentJalaliDate.split(" ")[1].split("/")[0]);
 
-    // console.log("currentMonth", currentMonth);
-    // console.log("jalali Month", jalaliMonth);
-    // Stop when we reach the next Jalali month
-    if (currentMonth > jalaliMonth) break;
+    // Stop when we reach the next Jalali month or year
+    if (currentMonth > jalaliMonth || currentYear > jalaliYear) break;
 
     // Add current day to the array
     daysArray.push({

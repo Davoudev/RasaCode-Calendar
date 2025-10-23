@@ -4,7 +4,7 @@ export const Day = ({ day, isSelected, onClick }: DayProps) => {
   if (!day) {
     return <div className="empty"></div>;
   }
-  console.log("isSelected", isSelected);
+  // console.log("day", day);
   return (
     <div
       className={`day ${isSelected ? "selected" : ""}`}

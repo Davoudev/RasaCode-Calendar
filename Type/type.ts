@@ -1,5 +1,3 @@
-export type Day = number | null;
-
 export interface MonthProps {
   monthName: string;
   daysInMonth: { jalaliDate: string; timestamp: number }[];
@@ -8,7 +6,7 @@ export interface MonthProps {
   setSelectedDate: (day: number) => void;
   goNextMonth: () => void;
   goPrevMonth: () => void;
-  currentMonth: number;
+  // currentMonth: number;
   currentYear: number;
 }
 
@@ -23,7 +21,7 @@ export interface WeekDayProps {
 }
 
 export interface SelectedDate {
-  day: Day;
+  day: number | null;
   month: number;
   year: number;
 }
@@ -38,4 +36,3 @@ export interface DateInputProps {
   months: { name: string }[];
 }
 export type PersianDate = { year: number; month: number; day: number };
-// export type GregorianDate = { gy: number; gm: number; gd: number };

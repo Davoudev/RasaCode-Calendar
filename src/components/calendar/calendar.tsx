@@ -21,30 +21,31 @@ export function Calendar({ date, changeDate }: CalendarProps) {
   const currentMonth = months[viewMonth];
 
   const goNextMonth = () => {
-    let newMonth = (viewMonth + 1) % 12;
-    let newYear = viewYear + (newMonth === 0 ? 1 : 0);
-    setViewMonth(newMonth);
-    setViewYear(newYear);
-
-    // this input will not change; it will only be updated by clicking on a day
+    if (!date) return;
+    // update timestamp
+    const newDate = new Date(date);
+    newDate.setHours(0, 0, 0, 0);
+    newDate.setMonth(newDate.getMonth() + 1);
+    changeDate(newDate.getTime());
+    // update state
+    setViewMonth((prev) => (prev + 1) % 12);
+    setViewYear((prev) => (viewMonth === 11 ? prev + 1 : prev));
   };
 
   const goPrevMonth = () => {
-    let newMonth = viewMonth - 1;
-    let newYear = viewYear;
-    if (newMonth < 0) {
-      newMonth = 11;
-      newYear -= 1;
-    }
-    setViewMonth(newMonth);
-    setViewYear(newYear);
-    // this input will not change; it will only be updated by clicking on a day
+    if (!date) return;
+    // update timestamp
+    const newDate = new Date(date);
+    newDate.setMonth(newDate.getMonth() - 1);
+    newDate.setHours(0, 0, 0, 0);
+    changeDate(newDate.getTime());
+    // update state
+    setViewMonth((prev) => (prev - 1 + 12) % 12);
+    setViewYear((prev) => (viewMonth === 0 ? prev - 1 : prev));
   };
 
   const handleDateSelect = (timestamp: number) => {
-    const dateObj = new Date(timestamp);
-    dateObj.setHours(0, 0, 0, 0);
-    changeDate(dateObj.getTime());
+    changeDate(timestamp);
   };
 
   return (
@@ -57,7 +58,7 @@ export function Calendar({ date, changeDate }: CalendarProps) {
         setSelectedDate={handleDateSelect}
         goNextMonth={goNextMonth}
         goPrevMonth={goPrevMonth}
-        currentMonth={viewMonth}
+        // currentMonth={viewMonth}
         currentYear={viewYear}
       />
     </div>
