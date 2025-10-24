@@ -1,13 +1,11 @@
 export interface MonthProps {
   monthName: string;
   daysInMonth: { jalaliDate: string; timestamp: number }[];
-  startDay: number;
+  // startDay: number;
   selectedDate: number | null;
   setSelectedDate: (day: number) => void;
   goNextMonth: () => void;
   goPrevMonth: () => void;
-  // currentMonth: number;
-  currentYear: number;
 }
 
 export interface DayProps {

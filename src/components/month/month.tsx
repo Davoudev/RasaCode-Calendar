@@ -6,24 +6,28 @@ import type { MonthProps } from "../../../type/type";
 export function Month({
   monthName,
   daysInMonth,
-  startDay,
   selectedDate,
   setSelectedDate,
   goNextMonth,
   goPrevMonth,
-  // currentMonth,
-  currentYear,
-}: MonthProps) {
-  const daysOfWeek: string[] = [
-    "شنبه",
-    "یک",
-    "دو",
-    "سه",
-    "چهار",
-    "پنج",
-    "جمعه",
-  ];
-  // console.log("daysInMonth", daysInMonth);
+}: 
+MonthProps) {
+
+  const fullToShortDayMap = {
+    شنبه: "شنبه",
+    یکشنبه: "یک",
+    دوشنبه: "دو",
+    سه‌شنبه: "سه",
+    چهارشنبه: "چهار",
+    پنجشنبه: "پنج",
+    جمعه: "جمعه",
+  };
+
+    const firstDayLabelFull = daysInMonth?.[0]?.jalaliDate?.split(" ")[0];
+    const allFullNames = Object.keys(fullToShortDayMap);
+    const summeryDays = Object.values(fullToShortDayMap)
+    const startDay = allFullNames.indexOf(firstDayLabelFull);
+
   const days = [
     ...Array(startDay).fill(null),
     ...daysInMonth!.map((dayObj, i) => ({
@@ -43,14 +47,14 @@ export function Month({
           ‹
         </button>
         <h2 className="month-title">
-          {monthName} - {currentYear}
+          {monthName} -{/* {currentYear} */}
         </h2>
         <button className="arrow" onClick={goNextMonth}>
           ›
         </button>
       </div>
       <div className="calendar">
-        {daysOfWeek.map((day) => (
+        {summeryDays.map((day) => (
           <WeekDay key={day} label={day} />
         ))}
 
