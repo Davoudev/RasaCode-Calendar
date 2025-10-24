@@ -22,11 +22,12 @@ MonthProps) {
     پنجشنبه: "پنج",
     جمعه: "جمعه",
   };
-
+console.log("daysInMonth" , daysInMonth)
     const firstDayLabelFull = daysInMonth?.[0]?.jalaliDate?.split(" ")[0];
     const allFullNames = Object.keys(fullToShortDayMap);
     const summeryDays = Object.values(fullToShortDayMap)
     const startDay = allFullNames.indexOf(firstDayLabelFull);
+    const currentYear = daysInMonth?.[0]?.jalaliDate?.split(" ")[1]?.split("/")[0];
 
   const days = [
     ...Array(startDay).fill(null),
@@ -47,7 +48,7 @@ MonthProps) {
           ‹
         </button>
         <h2 className="month-title">
-          {monthName} -{/* {currentYear} */}
+          {monthName} - {currentYear}
         </h2>
         <button className="arrow" onClick={goNextMonth}>
           ›
