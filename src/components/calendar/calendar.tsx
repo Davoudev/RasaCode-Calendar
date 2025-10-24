@@ -12,53 +12,65 @@ import { getMonthDays } from "../../../utils/getMonthDay";
 export function Calendar({ date, changeDate }: CalendarProps) {
   // selected Date for showing in input
   const inputSelectedDate = date ? getTodayPersianDate(date) : null;
-
   const [viewYear, setViewYear] = useState<number>(inputSelectedDate!.year);
   const [viewMonth, setViewMonth] = useState<number>(inputSelectedDate!.month);
-
+  const [daysInMonth, setِِDaysInMonth] = useState(getMonthDays(date!));
+  const [monthOffset, setMonthOffset] = useState(0);
   const startDay = getFirstWeekdayOfPersianMonthByYM(viewYear, viewMonth);
-
   const currentMonth = months[viewMonth];
 
   const goNextMonth = () => {
     if (!date) return;
-    // update timestamp
-    const newDate = new Date(date);
-    newDate.setHours(0, 0, 0, 0);
-    newDate.setMonth(newDate.getMonth() + 1);
-    changeDate(newDate.getTime());
-    // update state
+
+    const newCount = monthOffset + 1;
+    setMonthOffset(newCount);
+
+    const nextMonthDate = new Date(date);
+    nextMonthDate.setMonth(nextMonthDate.getMonth() + newCount);
+    setِِDaysInMonth(getMonthDays(nextMonthDate.getTime()));
     setViewMonth((prev) => (prev + 1) % 12);
     setViewYear((prev) => (viewMonth === 11 ? prev + 1 : prev));
   };
 
   const goPrevMonth = () => {
     if (!date) return;
-    // update timestamp
-    const newDate = new Date(date);
-    newDate.setMonth(newDate.getMonth() - 1);
-    newDate.setHours(0, 0, 0, 0);
-    changeDate(newDate.getTime());
-    // update state
+
+    const newCount = monthOffset - 1;
+    setMonthOffset(newCount);
+    console.log("count", newCount);
+
+    const nextMonthDate = new Date(date);
+    console.log("nextMonthDate", nextMonthDate);
+    nextMonthDate.setMonth(nextMonthDate.getMonth() + newCount);
+
+    console.log("nextMonthDateAfter", nextMonthDate);
+
+    setِِDaysInMonth(getMonthDays(nextMonthDate.getTime()));
+
     setViewMonth((prev) => (prev - 1 + 12) % 12);
     setViewYear((prev) => (viewMonth === 0 ? prev - 1 : prev));
   };
 
   const handleDateSelect = (timestamp: number) => {
-    changeDate(timestamp);
+    console.log("time", timestamp);
+    const newDate = new Date(timestamp);
+
+    newDate.setDate(newDate.getDate());
+
+    changeDate(newDate.getTime());
+    setMonthOffset(0);
   };
 
   return (
     <div>
       <Month
         monthName={currentMonth.name}
-        daysInMonth={getMonthDays(date!)}
+        daysInMonth={daysInMonth}
         startDay={startDay}
         selectedDate={date}
         setSelectedDate={handleDateSelect}
         goNextMonth={goNextMonth}
         goPrevMonth={goPrevMonth}
-        // currentMonth={viewMonth}
         currentYear={viewYear}
       />
     </div>

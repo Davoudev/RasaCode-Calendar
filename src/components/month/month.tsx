@@ -23,10 +23,10 @@ export function Month({
     "پنج",
     "جمعه",
   ];
-  console.log("daysInMonth", daysInMonth);
+  // console.log("daysInMonth", daysInMonth);
   const days = [
     ...Array(startDay).fill(null),
-    ...daysInMonth.map((dayObj, i) => ({
+    ...daysInMonth!.map((dayObj, i) => ({
       dayNumber: i + 1,
       timestamp: dayObj.timestamp,
     })),
@@ -35,7 +35,7 @@ export function Month({
   const handleClick = (timestamp: number): void => {
     setSelectedDate(timestamp);
   };
-  console.log("days", days);
+  // console.log("days", days);
   return (
     <div className="calendar-container">
       <div className="calendar-header">
