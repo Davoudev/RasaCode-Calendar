@@ -4,7 +4,6 @@ import { Day as DayComponent } from "./day";
 import type { MonthProps } from "../../../type/type";
 
 export function Month({
-  monthName,
   daysInMonth,
   selectedDate,
   setSelectedDate,
@@ -22,21 +21,20 @@ MonthProps) {
     پنجشنبه: "پنج",
     جمعه: "جمعه",
   };
-console.log("daysInMonth" , daysInMonth)
-    const firstDayLabelFull = daysInMonth?.[0]?.jalaliDate?.split(" ")[0];
-    const allFullNames = Object.keys(fullToShortDayMap);
-    const summeryDays = Object.values(fullToShortDayMap)
-    const startDay = allFullNames.indexOf(firstDayLabelFull);
-    const currentYear = daysInMonth?.[0]?.jalaliDate?.split(" ")[1]?.split("/")[0];
+  console.log("daysInMonth", daysInMonth);
+  const firstDayLabelFull = daysInMonth?.daysArray[0]?.jalaliDate?.split(" ")[0];
+  const allFullNames = Object.keys(fullToShortDayMap);
+  const summeryDays = Object.values(fullToShortDayMap);
+  const startDay = allFullNames.indexOf(firstDayLabelFull);
+  const currentYear = daysInMonth?.daysArray[0]?.jalaliDate?.split(" ")[1]?.split("/")[0];
 
   const days = [
     ...Array(startDay).fill(null),
-    ...daysInMonth!.map((dayObj, i) => ({
+    ...daysInMonth!.daysArray.map((dayObj, i) => ({
       dayNumber: i + 1,
       timestamp: dayObj.timestamp,
     })),
   ];
-
   const handleClick = (timestamp: number): void => {
     setSelectedDate(timestamp);
   };
@@ -48,7 +46,7 @@ console.log("daysInMonth" , daysInMonth)
           ‹
         </button>
         <h2 className="month-title">
-          {monthName} - {currentYear}
+          {daysInMonth?.monthName} - {currentYear}
         </h2>
         <button className="arrow" onClick={goNextMonth}>
           ›

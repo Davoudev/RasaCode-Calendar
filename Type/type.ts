@@ -1,7 +1,8 @@
 export interface MonthProps {
-  monthName: string;
-  daysInMonth: { jalaliDate: string; timestamp: number }[];
-  // startDay: number;
+  daysInMonth: {
+    daysArray: { jalaliDate: string; timestamp: number }[];
+    monthName: string;
+  };
   selectedDate: number | null;
   setSelectedDate: (day: number) => void;
   goNextMonth: () => void;
@@ -31,6 +32,5 @@ export interface CalendarProps {
 
 export interface DateInputProps {
   selectedDate: number | null;
-  months: { name: string }[];
 }
 export type PersianDate = { year: number; month: number; day: number };

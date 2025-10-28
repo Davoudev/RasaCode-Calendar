@@ -1,14 +1,13 @@
 import type { DateInputProps } from "../../../type/type";
-import { getTodayPersianDate } from "../../../utils/date-changer";
+import { getMonthDays } from "../../../utils/getMonthDay";
 
-export function DateInput({ selectedDate, months }: DateInputProps) {
+export function DateInput({ selectedDate }: DateInputProps) {
   let formattedPersianDate = "";
-  const todayPersianDate = getTodayPersianDate(selectedDate!);
+
+  const { monthName, today } = getMonthDays(selectedDate!);
 
   if (selectedDate != null) {
-    formattedPersianDate = `امروز ${todayPersianDate.day} ${
-      months[todayPersianDate.month].name
-    } ${todayPersianDate.year} است`;
+    formattedPersianDate = `امروز ${today.dayStr} ${monthName} ${today.yearStr} است`;
   }
 
   return (

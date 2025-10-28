@@ -9,14 +9,20 @@ export const getMonthDays = (timestamp: number) => {
     day: "2-digit",
   }).format(baseDate);
 
+  // get MonthName
+  const monthName = new Intl.DateTimeFormat("fa-IR", {
+    month: "long",
+    calendar: "persian",
+  }).format(baseDate);
+
   // Extract Jalali year, month, and day
-  const jalaliYear = Number(formattedJalaliDate.split("/")[0]);
-  const jalaliMonth = Number(formattedJalaliDate.split("/")[1]);
-  const jalaliDay = Number(formattedJalaliDate.split("/")[2]);
+  const [yearStr, monthStr, dayStr] = formattedJalaliDate
+    .split("/")
+    .map(Number);
 
   // Calculate the start of the Jalali month
   const startOfMonth = new Date(baseDate);
-  startOfMonth.setDate(baseDate.getDate() - jalaliDay);
+  startOfMonth.setDate(baseDate.getDate() - dayStr);
 
   const daysArray = [];
 
@@ -39,7 +45,7 @@ export const getMonthDays = (timestamp: number) => {
     const currentYear = Number(currentJalaliDate.split(" ")[1].split("/")[0]);
 
     // Stop when we reach the next Jalali month or year
-    if (currentMonth > jalaliMonth || currentYear > jalaliYear) break;
+    if (currentMonth > monthStr || currentYear > yearStr) break;
 
     // Add current day to the array
     daysArray.push({
@@ -50,5 +56,13 @@ export const getMonthDays = (timestamp: number) => {
     dayCounter++;
   }
 
-  return daysArray;
+  return {
+    daysArray,
+    monthName,
+    today: {
+      yearStr,
+      monthStr,
+      dayStr,
+    },
+  };
 };
