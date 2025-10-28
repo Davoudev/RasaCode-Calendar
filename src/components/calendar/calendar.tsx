@@ -10,7 +10,7 @@ export function Calendar({ date, changeDate }: CalendarProps) {
   // selected Date for showing in input
   const inputSelectedDate = date ? getTodayPersianDate(date) : null;
   const [viewMonth, setViewMonth] = useState<number>(inputSelectedDate!.month);
-  const [daysInMonth, setِِDaysInMonth] = useState(getMonthDays(date!));
+  const [daysInMonth, setDaysInMonth] = useState(getMonthDays(date!));
   const [monthOffset, setMonthOffset] = useState(0);
   const currentMonth = months[viewMonth];
 
@@ -23,7 +23,7 @@ export function Calendar({ date, changeDate }: CalendarProps) {
     // chnaged date just for showing in every calendar page
     const nextMonthDate = new Date(date);
     nextMonthDate.setMonth(nextMonthDate.getMonth() + newCount);
-    setِِDaysInMonth(getMonthDays(nextMonthDate.getTime()));
+    setDaysInMonth(getMonthDays(nextMonthDate.getTime()));
     setViewMonth((prev) => (prev + 1) % 12);
   };
 
@@ -36,7 +36,7 @@ export function Calendar({ date, changeDate }: CalendarProps) {
     // chnaged date just for showing in every calendar page
     const nextMonthDate = new Date(date);
     nextMonthDate.setMonth(nextMonthDate.getMonth() + newCount);
-    setِِDaysInMonth(getMonthDays(nextMonthDate.getTime()));
+    setDaysInMonth(getMonthDays(nextMonthDate.getTime()));
 
     setViewMonth((prev) => (prev - 1 + 12) % 12);
   };
