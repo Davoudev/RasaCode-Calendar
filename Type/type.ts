@@ -2,6 +2,7 @@ export interface MonthProps {
   daysInMonth: {
     daysArray: { jalaliDate: string; timestamp: number }[];
     monthName: string;
+    today: { yearStr: number; monthStr: number; dayStr: number };
   };
   selectedDate: number | null;
   setSelectedDate: (day: number) => void;

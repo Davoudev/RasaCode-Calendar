@@ -1,10 +1,11 @@
+import React from "react";
 import type { DayProps } from "../../../type/type";
 
-export const Day = ({ day, isSelected, onClick }: DayProps) => {
-  if (!day) {
-    return <div className="empty"></div>;
-  }
-  // console.log("day", day);
+export const Day = React.memo(({ day, isSelected, onClick }: DayProps) => {
+  if (!day) return <div className="empty"></div>;
+  console.log("isSelected", isSelected);
+  console.log("day", day);
+  console.log("onClick", onClick);
   return (
     <div
       className={`day ${isSelected ? "selected" : ""}`}
@@ -13,4 +14,4 @@ export const Day = ({ day, isSelected, onClick }: DayProps) => {
       {day.dayNumber}
     </div>
   );
-};
+});

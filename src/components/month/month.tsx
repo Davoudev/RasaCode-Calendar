@@ -2,6 +2,7 @@ import "./month.css";
 import { WeekDay } from "./week-day";
 import { Day as DayComponent } from "./day";
 import type { MonthProps } from "../../../type/type";
+import { useCallback } from "react";
 
 export function Month({
   daysInMonth,
@@ -24,9 +25,9 @@ MonthProps) {
   console.log("daysInMonth", daysInMonth);
   const firstDayLabelFull = daysInMonth?.daysArray[0]?.jalaliDate?.split(" ")[0];
   const allFullNames = Object.keys(fullToShortDayMap);
-  const summeryDays = Object.values(fullToShortDayMap);
   const startDay = allFullNames.indexOf(firstDayLabelFull);
-  const currentYear = daysInMonth?.daysArray[0]?.jalaliDate?.split(" ")[1]?.split("/")[0];
+  const summeryDays = Object.values(fullToShortDayMap);
+  const currentYear = daysInMonth?.today?.yearStr
 
   const days = [
     ...Array(startDay).fill(null),
@@ -35,10 +36,11 @@ MonthProps) {
       timestamp: dayObj.timestamp,
     })),
   ];
-  const handleClick = (timestamp: number): void => {
-    setSelectedDate(timestamp);
-  };
-  // console.log("days", days);
+const handleClick = useCallback((timestamp: number) => {
+  setSelectedDate(timestamp);
+}, []);
+  console.log("days", days);
+  console.log('selectedDate', selectedDate);
   return (
     <div className="calendar-container">
       <div className="calendar-header">
