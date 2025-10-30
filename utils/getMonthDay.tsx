@@ -40,7 +40,9 @@ export const getMonthDays = (timestamp: number) => {
 
   // Loop through days of the Jalali month
   let dayCounter = 1;
-  while (true) {
+  let keepGoing = true;
+
+  while (keepGoing) {
     const currentDate = new Date(startOfMonth);
     currentDate.setDate(startOfMonth.getDate() + dayCounter);
 
@@ -57,15 +59,17 @@ export const getMonthDays = (timestamp: number) => {
     const currentYear = Number(currentJalaliDate.split(" ")[1].split("/")[0]);
 
     // Stop when we reach the next Jalali month or year
-    if (currentMonth > monthStr || currentYear > yearStr) break;
+    if (currentMonth === monthStr && currentYear === yearStr) {
+      // Add current day to the array
+      daysArray.push({
+        jalaliDate: currentJalaliDate,
+        timestamp: currentDate.getTime(),
+      });
 
-    // Add current day to the array
-    daysArray.push({
-      jalaliDate: currentJalaliDate,
-      timestamp: currentDate.getTime(),
-    });
-
-    dayCounter++;
+      dayCounter++;
+    } else {
+      keepGoing = false;
+    }
   }
 
   return {
