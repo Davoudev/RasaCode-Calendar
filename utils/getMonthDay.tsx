@@ -1,3 +1,15 @@
+/**
+ * Generates an array of all days in the Jalali month of a given timestamp.
+ * Each day includes its Jalali date and corresponding Gregorian timestamp.
+ * Also returns the month name in Persian and today's year, month, and day.
+ *
+ * @param timestamp - A Gregorian timestamp in milliseconds
+ * @returns An object containing:
+ *   - daysArray: Array<{ jalaliDate: string, timestamp: number }> for each day of the month
+ *   - monthName: string representing the month name in Persian
+ *   - today: { yearStr: number, monthStr: number, dayStr: number } for the given date
+ */
+
 export const getMonthDays = (timestamp: number) => {
   const baseDate = new Date(timestamp);
   baseDate.setHours(0, 0, 0, 0);
