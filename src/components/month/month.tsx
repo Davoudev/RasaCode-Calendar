@@ -2,16 +2,16 @@ import "./month.css";
 import { WeekDay } from "./week-day";
 import { Day as DayComponent } from "./day";
 import type { MonthProps } from "../../../type/type";
-import { useCallback } from "react";
+import { memo, useCallback, useMemo } from "react";
 
-export function Month({
+export const Month =memo(({
   daysInMonth,
   selectedDate,
   setSelectedDate,
   goNextMonth,
   goPrevMonth,
 }: 
-MonthProps) {
+MonthProps) =>{
 
   const fullToShortDayMap = {
     شنبه: "شنبه",
@@ -27,20 +27,23 @@ MonthProps) {
   const allFullNames = Object.keys(fullToShortDayMap);
   const startDay = allFullNames.indexOf(firstDayLabelFull);
   const summeryDays = Object.values(fullToShortDayMap);
-  const currentYear = daysInMonth?.today?.yearStr
+  // const currentYear = daysInMonth?.today?.yearStr
 
-  const days = [
-    ...Array(startDay).fill(null),
-    ...daysInMonth!.daysArray.map((dayObj, i) => ({
-      dayNumber: i + 1,
-      timestamp: dayObj.timestamp,
-    })),
-  ];
+      const days = useMemo(() => {
+      return [
+        ...Array(startDay).fill(null),
+        ...daysInMonth!.daysArray.map((dayObj, i) => ({
+          dayNumber: i + 1,
+          timestamp: dayObj.timestamp,
+        })),
+      ];
+    }, [daysInMonth]);
+
 const handleClick = useCallback((timestamp: number) => {
   setSelectedDate(timestamp);
 }, []);
   console.log("days", days);
-  console.log('selectedDate', selectedDate);
+  // console.log('selectedDate', selectedDate);
   return (
     <div className="calendar-container">
       <div className="calendar-header">
@@ -48,7 +51,8 @@ const handleClick = useCallback((timestamp: number) => {
           ‹
         </button>
         <h2 className="month-title">
-          {daysInMonth?.monthName} - {currentYear}
+          {daysInMonth?.monthName} - 
+          {/* {currentYear} */}
         </h2>
         <button className="arrow" onClick={goNextMonth}>
           ›
@@ -70,4 +74,4 @@ const handleClick = useCallback((timestamp: number) => {
       </div>
     </div>
   );
-}
+})

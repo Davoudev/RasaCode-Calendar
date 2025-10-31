@@ -75,10 +75,10 @@ export const getMonthDays = (timestamp: number) => {
   return {
     daysArray,
     monthName,
-    today: {
-      yearStr,
-      monthStr,
-      dayStr,
-    },
+    // today: {
+    //   yearStr,
+    //   monthStr,
+    //   dayStr,
+    // },
   };
 };
