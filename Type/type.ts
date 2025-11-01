@@ -2,7 +2,7 @@ export interface MonthProps {
   daysInMonth: {
     daysArray: { jalaliDate: string; timestamp: number }[];
     monthName: string;
-    // today: { yearStr: number; monthStr: number; dayStr: number };
+    today: { yearStr: number; monthStr: number; dayStr: number };
   };
   selectedDate: number | null;
   setSelectedDate: (day: number) => void;
@@ -13,8 +13,7 @@ export interface MonthProps {
 export interface DayProps {
   day: { dayNumber: string; timestamp: number };
   isSelected: boolean;
-  // onClick: (day: number) => void;
-  setSelectedDate: any;
+  setSelectedDate: Function;
 }
 
 export interface WeekDayProps {

@@ -27,7 +27,7 @@ MonthProps) =>{
   const allFullNames = Object.keys(fullToShortDayMap);
   const startDay = allFullNames.indexOf(firstDayLabelFull);
   const summeryDays = Object.values(fullToShortDayMap);
-  // const currentYear = daysInMonth?.today?.yearStr
+  const currentYear = daysInMonth?.today?.yearStr
 
       const days = useMemo(() => {
       return [
@@ -49,8 +49,7 @@ MonthProps) =>{
           ‹
         </button>
         <h2 className="month-title">
-          {daysInMonth?.monthName} - 
-          {/* {currentYear} */}
+          {daysInMonth?.monthName} - {currentYear}
         </h2>
         <button className="arrow" onClick={goNextMonth}>
           ›
