@@ -2,7 +2,7 @@ import "./month.css";
 import { WeekDay } from "./week-day";
 import { Day as DayComponent } from "./day";
 import type { MonthProps } from "../../../type/type";
-import { memo, useCallback, useMemo } from "react";
+import { memo, useMemo } from "react";
 
 export const Month =memo(({
   daysInMonth,
@@ -39,9 +39,7 @@ MonthProps) =>{
       ];
     }, [daysInMonth]);
 
-const handleClick = useCallback((timestamp: number) => {
-  setSelectedDate(timestamp);
-}, []);
+ 
   console.log("days", days);
   // console.log('selectedDate', selectedDate);
   return (
@@ -68,7 +66,7 @@ const handleClick = useCallback((timestamp: number) => {
             key={day ? day.timestamp : `empty-${idx}`}
             day={day}
             isSelected={!!day && selectedDate === day.timestamp}
-            onClick={() => day && handleClick(day.timestamp)}
+            setSelectedDate={setSelectedDate}
           />
         ))}
       </div>
