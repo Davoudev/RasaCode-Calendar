@@ -2,7 +2,7 @@ import "./month.css";
 import { WeekDay } from "./week-day";
 import { Day as DayComponent } from "./day";
 import type { MonthProps } from "../../../type/type";
-import { useCallback } from "react";
+import { useMemo } from "react";
 
 export function Month({
   daysInMonth,
@@ -29,18 +29,19 @@ MonthProps) {
   const summeryDays = Object.values(fullToShortDayMap);
   const currentYear = daysInMonth?.today?.yearStr
 
-  const days = [
-    ...Array(startDay).fill(null),
-    ...daysInMonth!.daysArray.map((dayObj, i) => ({
-      dayNumber: i + 1,
-      timestamp: dayObj.timestamp,
-    })),
-  ];
-const handleClick = useCallback((timestamp: number) => {
-  setSelectedDate(timestamp);
-}, []);
+      const days = useMemo(() => {
+      return [
+        ...Array(startDay).fill(null),
+        ...daysInMonth!.daysArray.map((dayObj, i) => ({
+          dayNumber: i + 1,
+          timestamp: dayObj.timestamp,
+        })),
+      ];
+    }, [daysInMonth]);
+
+
+
   console.log("days", days);
-  console.log('selectedDate', selectedDate);
   return (
     <div className="calendar-container">
       <div className="calendar-header">
@@ -64,7 +65,7 @@ const handleClick = useCallback((timestamp: number) => {
             key={day ? day.timestamp : `empty-${idx}`}
             day={day}
             isSelected={!!day && selectedDate === day.timestamp}
-            onClick={() => day && handleClick(day.timestamp)}
+            setSelectedDate={setSelectedDate}
           />
         ))}
       </div>

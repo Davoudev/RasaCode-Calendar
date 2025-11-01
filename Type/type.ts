@@ -13,7 +13,7 @@ export interface MonthProps {
 export interface DayProps {
   day: { dayNumber: string; timestamp: number };
   isSelected: boolean;
-  onClick: (day: number) => void;
+  setSelectedDate: Function;
 }
 
 export interface WeekDayProps {
