@@ -8,7 +8,7 @@ export const Day = memo(({ day, isSelected, setSelectedDate }: DayProps) => {
 
   const onClick = useCallback(() => {
     day && setSelectedDate(day.timestamp);
-  }, []);
+  }, [day]);
 
   return (
     <div className={`day ${isSelected ? "selected" : ""}`} onClick={onClick}>
