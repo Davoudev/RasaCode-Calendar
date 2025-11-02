@@ -1,11 +1,14 @@
 import "./month.css";
 import { WeekDay } from "./week-day";
+import PopoverYearInput from '../../../utils/PopoverYearInput'
 import { Day as DayComponent } from "./day";
 import type { MonthProps } from "../../../type/type";
 import { useMemo } from "react";
+import { getMonthDays } from "../../../utils/getMonthDay";
 
 export function Month({
   daysInMonth,
+  setDaysInMonth,
   selectedDate,
   setSelectedDate,
   goNextMonth,
@@ -38,10 +41,15 @@ MonthProps) {
         })),
       ];
     }, [daysInMonth]);
+  const handleYearChange = (newYear: number) => {
+  const yearDiff = newYear - currentYear;
+      const prevDate = new Date(selectedDate!);
+      prevDate.setFullYear(prevDate.getFullYear() + yearDiff);
+      setDaysInMonth(getMonthDays(prevDate.getTime()));
+  };
 
 
-
-  console.log("days", days);
+  console.log("days", days); 
   return (
     <div className="calendar-container">
       <div className="calendar-header">
@@ -49,7 +57,8 @@ MonthProps) {
           ‹
         </button>
         <h2 className="month-title">
-          {daysInMonth?.monthName} - {currentYear}
+          {daysInMonth?.monthName} - 
+          <PopoverYearInput currentYear={currentYear} onSubmit={handleYearChange} />
         </h2>
         <button className="arrow" onClick={goNextMonth}>
           ›

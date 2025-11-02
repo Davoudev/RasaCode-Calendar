@@ -4,6 +4,7 @@ export interface MonthProps {
     monthName: string;
     today: { yearStr: number; monthStr: number; dayStr: number };
   };
+  setDaysInMonth: (days: any) => void;
   selectedDate: number | null;
   setSelectedDate: (day: number) => void;
   goNextMonth: () => void;
@@ -35,3 +36,8 @@ export interface DateInputProps {
   selectedDate: number | null;
 }
 export type PersianDate = { year: number; month: number; day: number };
+
+export interface PopoverYearInputProps {
+  currentYear: number;
+  onSubmit: (year: number) => void;
+}

@@ -44,6 +44,7 @@ export function Calendar({ date, changeDate }: CalendarProps) {
     <div>
       <Month
         daysInMonth={daysInMonth}
+        setDaysInMonth={setDaysInMonth}
         selectedDate={date}
         setSelectedDate={handleDateSelect}
         goNextMonth={goNextMonth}
