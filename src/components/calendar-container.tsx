@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DateInput } from "./date-input/date-input";
-import { Calendar } from "./calendarx/calendar";
+import { Calendar } from "./calendar/calendar";
 
 export function CalendarContainer() {
   const now = new Date();

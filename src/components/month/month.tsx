@@ -2,9 +2,9 @@ import "./month.css";
 import { WeekDay } from "./week-day";
 import PopoverYearInput from '../../../utils/year-picker-popoverx'
 import { Day as DayComponent } from "./day";
-import type { MonthProps } from "../../../typex/type";
+import type { MonthProps } from "../../../type/type";
 import { useMemo } from "react";
-import { getMonthDays } from "../../../utils/get-month-dayx";
+import { getMonthDays } from "../../../utils/get-month-day";
 
 export function Month({
   daysInMonth,

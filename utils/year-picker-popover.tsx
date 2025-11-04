@@ -12,7 +12,7 @@ import {
 //external types dependencies
 //internal dependencies
 //internal types dependencies
-import type { PopoverYearInputProps } from "../typex/type";
+import type { PopoverYearInputProps } from "../type/type";
 
 /**
  * A popover component for selecting a year from a list of nearby years.
