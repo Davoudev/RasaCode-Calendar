@@ -1,5 +1,5 @@
 import type { DateInputProps } from "../../../type/type";
-import { getMonthDays } from "../../../utils/getMonthDay";
+import { getMonthDays } from "../../../utils/get-month-day";
 
 export function DateInput({ selectedDate }: DateInputProps) {
   let formattedPersianDate = "";
