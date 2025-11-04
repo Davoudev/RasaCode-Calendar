@@ -1,3 +1,19 @@
+//external dependencies
+import type { PopoverYearInputProps } from "../type/type";
+//external types dependencies
+import { useRef, useState } from "react";
+import {
+  flip,
+  offset,
+  shift,
+  useClick,
+  useDismiss,
+  useFloating,
+  useInteractions,
+} from "@floating-ui/react";
+//internal dependencies
+//internal types dependencies
+
 /**
  * A popover input component for selecting and submitting a specific year.
  * Displays the current year and opens a floating input field (popover) when clicked.
@@ -18,22 +34,6 @@
  *
  * @returns {JSX.Element} A floating year input popover that allows changing the current year
  */
-
-//external dependencies
-import type { PopoverYearInputProps } from "../type/type";
-//external types dependencies
-import { useRef, useState } from "react";
-import {
-  flip,
-  offset,
-  shift,
-  useClick,
-  useDismiss,
-  useFloating,
-  useInteractions,
-} from "@floating-ui/react";
-//internal dependencies
-//internal types dependencies
 
 const PopoverYearInput = ({ currentYear, onSubmit }: PopoverYearInputProps) => {
   const [open, setOpen] = useState(false);
