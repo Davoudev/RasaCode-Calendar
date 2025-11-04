@@ -1,5 +1,5 @@
 import { memo, useCallback } from "react";
-import type { DayProps } from "../../../type/type";
+import type { DayProps } from "../../../typex/type";
 
 export const Day = memo(({ day, isSelected, setSelectedDate }: DayProps) => {
   if (!day) return <div className="empty"></div>;

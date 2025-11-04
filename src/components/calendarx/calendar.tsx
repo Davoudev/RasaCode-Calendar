@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
-import type { CalendarProps } from "../../../type/type";
+import type { CalendarProps } from "../../../typex/type";
 import "./calendar.css";
-import { Month } from "../month/month";
-import { getMonthDays } from "../../../utils/getMonthDay";
+import { Month } from "../monthx/month";
+import { getMonthDays } from "../../../utils/get-month-dayx";
 
 export function Calendar({ date, changeDate }: CalendarProps) {
   // selected Date for showing in input
