@@ -51,7 +51,7 @@ const PopoverYearInput = ({ currentYear, onSubmit }: PopoverYearInputProps) => {
     setOpen(false);
   };
 
-  const years = Array.from({ length: 11 }, (_, i) => currentYear - 5 + i);
+  const years = Array.from({ length: 7 }, (_, i) => currentYear - 3 + i);
 
   return (
     <>

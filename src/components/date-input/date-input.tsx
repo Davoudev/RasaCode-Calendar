@@ -1,7 +1,7 @@
 import type { DateInputProps } from "../../../type/type";
 import { getMonthDays } from "../../../utils/get-month-day";
 
-export function DateInput({ selectedDate }: DateInputProps) {
+export function DateInput({ selectedDate, onClick }: DateInputProps) {
   let formattedPersianDate = "";
 
   const { monthName, today } = getMonthDays(selectedDate!);
@@ -11,7 +11,7 @@ export function DateInput({ selectedDate }: DateInputProps) {
   }
 
   return (
-    <div className="date-output">
+    <div className="date-output" onClick={onClick}>
       <input readOnly value={formattedPersianDate} />
     </div>
   );

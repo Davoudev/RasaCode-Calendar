@@ -34,6 +34,7 @@ export interface CalendarProps {
 
 export interface DateInputProps {
   selectedDate: number | null;
+  onClick?: () => void;
 }
 export type PersianDate = { year: number; month: number; day: number };
 

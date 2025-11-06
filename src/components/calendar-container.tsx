@@ -8,10 +8,20 @@ export function CalendarContainer() {
   const today = now.getTime();
 
   const [selectedDate, setSelectedDate] = useState<number | null>(today);
+  const [showCalendar, setShowCalendar] = useState(false);
+
+  const toggleCalendar = () => setShowCalendar((prev) => !prev);
+
   return (
     <div className="calendar-wrapper">
-      <Calendar date={selectedDate} changeDate={setSelectedDate} />
-      <DateInput selectedDate={selectedDate} />
+      <div className="calendar-inner">
+        {showCalendar && (
+          <div className="calendar-popup">
+            <Calendar date={selectedDate} changeDate={setSelectedDate} />
+          </div>
+        )}
+        <DateInput selectedDate={selectedDate} onClick={toggleCalendar} />
+      </div>
     </div>
   );
 }
