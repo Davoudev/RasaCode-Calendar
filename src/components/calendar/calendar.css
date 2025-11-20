@@ -3,6 +3,7 @@
 }
 .date-output input {
   width: 100%;
+  cursor: pointer;
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ddd;

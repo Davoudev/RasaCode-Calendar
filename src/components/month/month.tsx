@@ -42,8 +42,8 @@ MonthProps) {
       ];
     }, [daysInMonth]);
   const handleYearChange = (newYear: number) => {
-  const yearDiff = newYear - currentYear;
-      const prevDate = new Date(selectedDate!);
+     const yearDiff = newYear - currentYear;
+      const prevDate = new Date(daysInMonth!.baseTimestamp);
       prevDate.setFullYear(prevDate.getFullYear() + yearDiff);
       setDaysInMonth(getMonthDays(prevDate.getTime()));
   };

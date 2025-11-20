@@ -80,5 +80,6 @@ export const getMonthDays = (timestamp: number) => {
       monthStr,
       dayStr,
     },
+    baseTimestamp: baseDate.getTime(),
   };
 };
